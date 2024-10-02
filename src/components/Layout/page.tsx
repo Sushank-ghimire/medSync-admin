@@ -10,7 +10,7 @@ const Layout = () => {
     if (!token) {
       naviagte("/login");
     } else {
-      naviagte("/");
+      naviagte("/admin-dashboard");
     }
   }, []);
   return (

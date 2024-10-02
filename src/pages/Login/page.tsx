@@ -18,7 +18,7 @@ const Login = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      navigate("/");
+      login === "Admin" && navigate("/admin-dashboard");
     } else navigate("/login");
   }, []);
 

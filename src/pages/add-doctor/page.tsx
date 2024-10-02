@@ -4,42 +4,30 @@ import { toast } from "react-toastify";
 
 const AddDoctor = () => {
   const [loading, setLoading] = useState(false);
-  
+
+  const [_, setDoctorImage] = useState<null | File>(null);
+
   const handleAddDoctor = async (e: FormEvent<HTMLFormElement>) => {
     setLoading(true);
     e.preventDefault();
     const form = e.currentTarget;
     const formData = new FormData(form);
-
-    const userData = {
-      image: formData.get("image"),
-      name: formData.get("name"),
-      speciality: formData.get("speciality"),
-      email: formData.get("email"),
-      degree: formData.get("degree"),
-      password: formData.get("passoword"),
-      address: {
-        address1: formData.get("address1"),
-        address2: formData.get("address2"),
-      },
-      fees: formData.get("fee"),
-      about: formData.get("about"),
-      experience: formData.get("experience"),
-    };
     try {
       const res = await fetch("/api/v1/admin/addDoctors", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          token: localStorage.getItem("token") as string,
         },
-        body: JSON.stringify(userData),
+        body: formData,
       });
       const data = await res.json();
       if (data.success) {
         toast.success(data.message);
+        form.reset();
         return;
       }
       toast.error(data.message);
+      form.reset();
       return;
     } catch (error) {
       if (error instanceof Error) toast.error(error.message);
@@ -51,14 +39,14 @@ const AddDoctor = () => {
   return (
     <div
       style={{ width: "100%", maxWidth: "calc(100% - 80px)" }}
-      className="flex h-full flex-col text-left md:w-[80%] p-2 space-y-4"
+      className="flex h-full flex-col overflow-y-auto text-left md:w-[80%] p-2 space-y-4"
     >
       <h1 className="text-xl w-[90%] mx-auto md:text-2xl font-bold mt-4">
         Add Doctors
       </h1>
       <form
         onSubmit={handleAddDoctor}
-        className="mt-4 w-[90%] md:w-[90%] mx-auto flex flex-col gap-4"
+        className="mt-4 w-[90%] max-h-full md:w-[90%] mx-auto flex flex-col gap-4"
       >
         <div
           className="flex tooltip flex-col justify-start cursor-pointer items-center"
@@ -67,6 +55,12 @@ const AddDoctor = () => {
           <input
             type="file"
             name="image"
+            id="image"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              if (e.target.files && e.target.files.length > 0) {
+                setDoctorImage(e.target?.files[0]); // Correct way to access the first file
+              }
+            }}
             className="file-input file-input-bordered file-input-primary w-full max-w-xs"
           />
         </div>
@@ -172,7 +166,7 @@ const AddDoctor = () => {
               type="number"
               placeholder="Doctor Fee"
               required
-              name="fee"
+              name="fees"
               min={20}
               max={500}
               id="fee"
@@ -209,7 +203,6 @@ const AddDoctor = () => {
             "Add Doctor"
           )}
         </button>
-
       </form>
     </div>
   );

@@ -3,7 +3,7 @@ import { tabData } from "../../utils/Tabs";
 import { Link } from "react-router-dom";
 
 const SideBar = () => {
-  const [activeTab, setActiveTab] = useState<string>("");
+  const [activeTab, setActiveTab] = useState<string>("Dashboard");
 
   return (
     <div className="bg-blue-50 min-h-screen left-0 bottom-0 top-20 md:w-[20%] w-[80px] flex flex-col">

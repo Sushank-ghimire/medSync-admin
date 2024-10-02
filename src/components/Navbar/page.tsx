@@ -1,5 +1,8 @@
+import { toast } from "react-toastify";
+
 const Navbar = () => {
   const handleLogout = () => {
+    toast.success("Logout successfull.");
     localStorage.clear();
     location.reload();
   };

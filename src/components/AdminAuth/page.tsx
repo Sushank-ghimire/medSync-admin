@@ -10,6 +10,7 @@ const AdminAuth = ({ children }: { children: React.ReactNode }) => {
       navigate("/");
     }
   }, []);
+  !userData.isAdmin && null;
   return <>{children}</>;
 };
 
