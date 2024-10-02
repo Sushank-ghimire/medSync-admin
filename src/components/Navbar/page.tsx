@@ -1,10 +1,26 @@
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Navbar = () => {
-  const handleLogout = () => {
-    toast.success("Logout successfull.");
-    localStorage.clear();
-    location.reload();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      const res = await fetch("/api/v1/admin/logout", {
+        method: "DELETE",
+      });
+      const resData = await res.json();
+
+      if (resData.success) {
+        toast.success(resData.message);
+        localStorage.clear();
+        navigate("/login");
+        return;
+      }
+      toast.error(resData.message);
+    } catch (error) {
+      console.log("Error while logout : ", error);
+    }
   };
   return (
     <nav className="w-full h-fit px-8 md:px-12 py-4 font-bold flex justify-between items-center bg-blue-50">
