@@ -13,7 +13,7 @@ const SideBar = () => {
           key={data.tab}
           className={`md:w-full w-fit mx-auto h-fit gap-3 py-3 flex justify-center px-3 items-center font-semibold ${
             activeTab === data.tab
-              ? "bg-indigo-300 md:border-r-4 md:border-indigo-500"
+              ? "bg-indigo-300 md:border-r-4 md:border-indigo-500 sm:rounded-lg md:rounded-none"
               : ""
           }`}
           to={data.to}

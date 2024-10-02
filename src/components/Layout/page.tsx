@@ -1,6 +1,7 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import { Navbar, SideBar } from "../Export";
 import { useEffect } from "react";
+import ContextProvider from "../../context/UserContext";
 
 const Layout = () => {
   const naviagte = useNavigate();
@@ -14,13 +15,15 @@ const Layout = () => {
     }
   }, []);
   return (
-    <main className="min-h-screen w-full">
-      <Navbar />
-      <div className="flex">
-        <SideBar />
-        <Outlet />
-      </div>
-    </main>
+    <ContextProvider>
+      <main className="min-h-screen w-full">
+        <Navbar />
+        <div className="flex">
+          <SideBar />
+          <Outlet />
+        </div>
+      </main>
+    </ContextProvider>
   );
 };
 

@@ -37,6 +37,7 @@ export interface Doctor {
   address: Address;
   available?: boolean;
   slots_booked?: {};
+  email?: string;
 }
 
 // Type for the collection of doctors

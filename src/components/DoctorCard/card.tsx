@@ -1,7 +1,13 @@
 import { Link } from "react-router-dom";
 import { Doctor } from "../../Types/Assets.types";
 
-const DoctorsCard = ({ doctor }: { doctor: Doctor }) => {
+const DoctorsCard = ({
+  doctor,
+  toggleCheck,
+}: {
+  doctor: Doctor;
+  toggleCheck: (email: string) => any;
+}) => {
   return (
     <Link
       to={``}
@@ -13,10 +19,11 @@ const DoctorsCard = ({ doctor }: { doctor: Doctor }) => {
           <p className="flex justify-between items-center w-full cursor-pointer">
             <input
               className="cursor-pointer"
-              defaultChecked
+              checked={doctor.available}
               type="checkbox"
               name="aviability"
               id="aviability"
+              onChange={() => toggleCheck(doctor.email as string)}
             />
             <label htmlFor="aviability">Avialable</label>
           </p>
